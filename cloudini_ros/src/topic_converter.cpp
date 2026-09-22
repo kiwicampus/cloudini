@@ -70,7 +70,8 @@ rclcpp::QoS adapt_request_to_offers(
   rclcpp::QoS request_qos(rmw_qos_profile_default.depth);
 
   if (endpoints.empty()) {
-    return request_qos;
+    // discovery may not be done yet; best_effort matches both kinds of publisher
+    return request_qos.best_effort();
   }
   size_t reliability_reliable_endpoints_count = 0;
   size_t durability_transient_local_endpoints_count = 0;
